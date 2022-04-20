@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import { useState, useContext, createContext } from 'react';
+import { useState, useContext, createContext, useEffect } from 'react';
 import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { auth } from '../config/firebase-config';
 
@@ -8,14 +8,14 @@ type UserContextProps = {
 }
 
 export interface AuthData {
-  token: string;
-  email: string;
-  name: string;
+  uid: string;
+  email: string | null;
+  name?: string;
 };
 
 export interface AuthContextData {
   login: (email: string, senha: string) => Promise<void>
-  logout: () => Promise<void>
+  logout: () => void;
   authData?: AuthData;
   isLoading: boolean;
   erro: boolean;
@@ -29,17 +29,39 @@ export const AuthProvider = ({children}: UserContextProps) => {
   const [isLoading, setisLoading] = useState(false);
   const [erro, setErro] = useState(false);
 
+  useEffect(() => {
+    const loadStorage = () =>{
+      const user = JSON.parse(sessionStorage.getItem("@AuthData") || '{}');
+      if(user){
+        setAuthData(user);
+      }else{
+        return;
+      }
+    }
+    loadStorage();
+  },[])
+
   async function login(email:string, senha:string){
     await signInWithEmailAndPassword(auth, email, senha)
-      .then((response) => console.log(response))
-        .catch((error) => console.log(error))
+      .then((UserCredential) => {
+        if(UserCredential){
+          setAuthData({uid:UserCredential.user.uid, email: UserCredential.user.email});
+          sessionStorage.setItem("@AuthData", JSON.stringify({uid:UserCredential.user.uid, email: UserCredential.user.email}));
+        }
+      })
+        .catch((error) => {
+          if(error){
+            setErro(true);
+          }
+        });
   };
 
-  async function logout() {
+  console.log(authData);
+
+  function logout() {
     setAuthData(undefined);
-    await signOut(auth)
-      .then((response) => console.log(response))
-        .catch((error) => console.log(error))
+    sessionStorage.removeItem("@AuthData");
+    return;
   }
 
   return (
