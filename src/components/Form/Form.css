@@ -1,0 +1,32 @@
+.form-login{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.inputs{
+  width: 586px;
+  height: 69px;
+}
+
+.username-container{
+  display: flex;
+  align-items: center;
+  width: 586px;
+}
+
+.username-site-text{
+  width: 10%;
+}
+
+.username-container .inputs{
+  width: 90%;
+}
+
+.form-register{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
