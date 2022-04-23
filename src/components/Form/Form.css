@@ -30,3 +30,20 @@
   justify-content: center;
   flex-direction: column;
 }
+
+.btn-login{
+  margin-bottom: 1em !important;
+  width: 586px;
+}
+
+.btn-createA{
+  width: 586px;
+}
+
+.forget__pass{
+  margin: 1.5em 0;
+  color: #bdbdbd;
+  font-weight: 400;
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 13pt;
+}

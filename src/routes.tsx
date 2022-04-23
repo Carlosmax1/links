@@ -1,29 +1,38 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Login from './pages/Login';
 import DashBoard from './pages/Dashboard';
 import Register from './pages/Register';
+import Profile from './pages/Profile';
 import { useAuth } from './contexts/auth';
+import { theme } from './theme/theme';
+import { ThemeProvider } from '@mui/material';
 
-export default function MyRoutes(){
+export default function MyRoutes() {
 
   const auth = useAuth();
-  
-  return(
+
+  return (
+
     <Router>
-      <Routes>
-      {auth.authData?.uid ?
-      <>
-        <Route path='/dashboard' element={<DashBoard/>} />
-        <Route path='/' element={<Navigate to='/dashboard'/>} />
-      </>
-      : 
-        <>
-          <Route path='/' element={<Login name='Login'/>} />
-          <Route path='/register' element={<Register name='Register'/>} />
-        </>
-      }
-      </Routes>
+      <ThemeProvider theme={theme}>
+        <Routes>
+
+          <Route path='/:username' element={<Profile />} />
+          {auth.authData?.uid ?
+            <>
+              <Route path='/dashboard' element={<DashBoard name='DashBoard' />} />
+              <Route path='/' element={<Navigate to='/dashboard' />} />
+            </>
+            :
+            <>
+              <Route path='/' element={<Login name='Login' />} />
+              <Route path='/register' element={<Register name='Register' />} />
+            </>
+          }
+
+        </Routes>
+      </ThemeProvider>
     </Router>
   )
 }

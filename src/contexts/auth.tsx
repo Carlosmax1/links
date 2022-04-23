@@ -1,7 +1,10 @@
 import React, { ReactNode } from 'react';
 import { useState, useContext, createContext, useEffect } from 'react';
-import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword} from 'firebase/auth';
 import { auth } from '../config/firebase-config';
+import {collection, addDoc, CollectionReference} from 'firebase/firestore';
+import {db} from '../config/firebase-config';
+import { Collection } from 'typescript';
 
 type UserContextProps = {
   children: ReactNode
@@ -11,10 +14,13 @@ export interface AuthData {
   uid: string;
   email: string | null;
   name?: string;
+  username?: string;
+  url_profile?: string;
 };
 
 export interface AuthContextData {
   login: (email: string, senha: string) => Promise<void>
+  register: (email: string, senha: string, name:string, username:string) => Promise<void>
   logout: () => void;
   authData?: AuthData;
   isLoading: boolean;
@@ -31,7 +37,7 @@ export const AuthProvider = ({children}: UserContextProps) => {
 
   useEffect(() => {
     const loadStorage = () =>{
-      const user = JSON.parse(sessionStorage.getItem("@AuthData") || '{}');
+      const user = JSON.parse(localStorage.getItem("@AuthData") || '{}');
       if(user){
         setAuthData(user);
       }else{
@@ -46,7 +52,7 @@ export const AuthProvider = ({children}: UserContextProps) => {
       .then((UserCredential) => {
         if(UserCredential){
           setAuthData({uid:UserCredential.user.uid, email: UserCredential.user.email});
-          sessionStorage.setItem("@AuthData", JSON.stringify({uid:UserCredential.user.uid, email: UserCredential.user.email}));
+          localStorage.setItem("@AuthData", JSON.stringify({uid:UserCredential.user.uid, email: UserCredential.user.email}));
         }
       })
         .catch((error) => {
@@ -56,16 +62,31 @@ export const AuthProvider = ({children}: UserContextProps) => {
         });
   };
 
-  console.log(authData);
+  async function saveUserDB(userCollection: CollectionReference, data: object) {
+    await addDoc(userCollection, data)
+      .then((response) => console.log(response))
+        .catch((error) => console.log(error));
+  };
+
+  async function register(email:string, senha:string, name:string, username:string){
+    await createUserWithEmailAndPassword(auth, email, senha)
+      .then((response) => {
+        if(response){
+          const userCollection = collection(db, 'users');
+          saveUserDB(userCollection, {name: name, email: email, uid:response.user.uid, username: username, url_profile: '/'})
+        }
+      })
+        .catch((error) => console.log(error));
+  };
 
   function logout() {
     setAuthData(undefined);
-    sessionStorage.removeItem("@AuthData");
+    localStorage.removeItem("@AuthData");
     return;
-  }
+  };
 
   return (
-    <AuthContext.Provider value={{login, logout, authData, isLoading, erro}}>
+    <AuthContext.Provider value={{login, logout, register ,authData, isLoading, erro}}>
       {children}
     </AuthContext.Provider>
   );
