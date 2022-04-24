@@ -21,7 +21,7 @@ export default function MyRoutes() {
           <Route path='/:username' element={<Profile />} />
           {auth.authData?.uid ?
             <>
-              <Route path='/dashboard' element={<DashBoard name='DashBoard' />} />
+              <Route path='/dashboard' element={<DashBoard name='Dashboard' />} />
               <Route path='/' element={<Navigate to='/dashboard' />} />
             </>
             :

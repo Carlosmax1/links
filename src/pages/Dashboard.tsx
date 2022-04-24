@@ -1,10 +1,11 @@
-import { Button } from '@mui/material';
+import { Button, Container } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/auth';
 import { Link } from 'react-router-dom';
 import { db } from '../config/firebase-config';
 import { collection, where, query, getDocs } from '@firebase/firestore';
 import { DocumentData } from 'firebase/firestore';
+import UserInfo from '../components/UserInfo/UserInfo';
 
 interface DashBoardProps{
   name: string;
@@ -32,17 +33,11 @@ export default function DashBoard({name} : DashBoardProps) {
 
   return (
     <>
-      <img src={currentUser.url_profile}></img>
-      <form onSubmit={(e) => e.preventDefault()}>
-        <input onChange={(e) => setFile(e.target.files || undefined)} type='file'></input>
-        <button type='submit'>Enviar</button>
-      </form>
-      <h1>Perfil</h1>
-      <h2>email: {auth.authData?.email}</h2>
-      <h2>uid: {auth.authData?.uid}</h2>
-      <h2>nome: {currentUser.name}</h2>
-      <h2>apelido: {currentUser.username}</h2>
-      <Link to='/'><Button onClick={() => auth.logout()} variant='contained'>Sair</Button></Link>
+      <Container fixed sx={{display: 'flex', justifyContent: 'center', marginTop: '1em', flexDirection: 'column', alignItems:"center"}}>
+        {currentUser.name &&(
+          <UserInfo name={currentUser.name} username={currentUser.username} social_medias={currentUser.social_medias}/>
+        )}
+      </Container>
     </>
   )
 }

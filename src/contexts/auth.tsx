@@ -4,7 +4,6 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword} from 'fireb
 import { auth } from '../config/firebase-config';
 import {collection, addDoc, CollectionReference} from 'firebase/firestore';
 import {db} from '../config/firebase-config';
-import { Collection } from 'typescript';
 
 type UserContextProps = {
   children: ReactNode
