@@ -52,6 +52,12 @@ export const hoverInput = {
   },
   '& .MuiInputLabel-root':{
     fontSize: 18,
+  },
+  '& .MuiOutlinedInput-root.Mui-disabled .MuiOutlinedInput-notchedOutline':{
+    borderColor: "#717173",
+  },
+  '& .MuiInputLabel-root.Mui-disabled':{
+    color: '#717173'
   }
 };
 

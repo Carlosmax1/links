@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '../contexts/auth';
 import { Link } from 'react-router-dom';
-import { db } from '../config/firebase-config';
-import { collection, where, query, getDocs } from '@firebase/firestore';
-import { DocumentData } from 'firebase/firestore';
 import Menu from '../components/Menu/Menu';
 import Customize from '../components/Customize/Customize';
+import Footer from '../components/Footer/Footer';
 
 interface DashBoardProps {
   name: string;
@@ -14,30 +12,17 @@ interface DashBoardProps {
 export default function DashBoard({ name }: DashBoardProps) {
 
   const auth = useAuth();
-  const [currentUser, setCurrentUser] = useState({} as DocumentData);
   const [file, setFile] = useState<FileList>();
   
-  document.title = `${name} - ${currentUser.name} | ${auth.nav}`;
-
-  useEffect(() => {
-    async function getUser() {
-      const UserCollection = collection(db, "users");
-      const q = query(UserCollection, where('uid', '==', auth.authData?.uid));
-      const querySnapshot = await getDocs(q);
-      querySnapshot.forEach((doc) => {
-        setCurrentUser(doc.data());
-      });
-    };
-    getUser();
-  }, []);
+  document.title = `${name} - ${auth.userData.name} | ${auth.nav}`;
 
   return (
     <>
-      {currentUser.name && (
+      {auth.userData.name && (
         <Menu 
-          name={currentUser.name} 
-          username={currentUser.username} 
-          social_medias={currentUser.social_medias}
+          name={auth.userData.name} 
+          username={auth.userData.username} 
+          social_medias={auth.userData.social_medias}
         />
       )}
       {auth.nav == 'customizar' &&(
@@ -45,6 +30,7 @@ export default function DashBoard({ name }: DashBoardProps) {
           <Customize/>
         </>
       )}
+      <Footer/>
     </>
   )
 }

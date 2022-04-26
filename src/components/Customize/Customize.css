@@ -5,7 +5,7 @@
   margin-top: 1em;
   width: 65%;
   height: 70vh;
-  border: 1px solid #38035c;
+  /* border: 1px solid #38035c; */
   border-radius: 10px;
 }
 
@@ -19,6 +19,11 @@
   height: 150px;
   background-color: #38035c;
   border-radius: 8px;
+  cursor: pointer;
+}
+
+.user__images-profile:hover{
+  background-color: #24023a;
 }
 
 .user__images-bg{
@@ -26,4 +31,25 @@
   height: 150px;
   background-color: #38035c;
   border-radius: 8px;
+  cursor: pointer;
+}
+
+.user__images-bg:hover{
+  background-color: #24023a;
+}
+
+.user__images-profile-title{
+  color: #bdbdbd;
+  text-transform: lowercase;
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 500;
+  font-size: 18pt;
+}
+
+.user__images-bg-title{
+  color: #bdbdbd;
+  text-transform: lowercase;
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 500;
+  font-size: 18pt;
 }

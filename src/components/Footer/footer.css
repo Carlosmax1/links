@@ -1,0 +1,11 @@
+.footer{
+  text-align: center;
+  margin: 1.5em 0;
+}
+
+.footer-text{
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 300;
+  color: #bdbdbd;
+  font-size: 15pt;
+}

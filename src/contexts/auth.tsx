@@ -2,7 +2,8 @@ import React, { ReactNode } from 'react';
 import { useState, useContext, createContext, useEffect } from 'react';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword} from 'firebase/auth';
 import { auth } from '../config/firebase-config';
-import {collection, addDoc, CollectionReference} from 'firebase/firestore';
+
+import {collection, addDoc, CollectionReference, where, query, getDocs, DocumentData} from 'firebase/firestore';
 import {db} from '../config/firebase-config';
 
 type UserContextProps = {
@@ -25,6 +26,7 @@ export interface AuthContextData {
   isLoading: boolean;
   erro: boolean;
   nav: string;
+  userData: DocumentData
   navChange: (nav: string) => void;
 };
 
@@ -33,15 +35,21 @@ const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 export const AuthProvider = ({children}: UserContextProps) => {
   
   const [authData, setAuthData] = useState<AuthData>();
-  const [isLoading, setisLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [erro, setErro] = useState(false);
   const [nav, setNav] = useState('customizar');
+  const [userData, setUserData] = useState({} as DocumentData);
 
   useEffect(() => {
     const loadStorage = () =>{
-      const user = JSON.parse(localStorage.getItem("@AuthData") || '{}');
-      if(user){
-        setAuthData(user);
+      const authData = JSON.parse(localStorage.getItem("@AuthData") || '{}');
+      const userData = JSON.parse(localStorage.getItem("@UserData") || '{}');
+      if(authData && !userData){
+        setAuthData(authData);
+        getUser(authData.uid);
+      }else if(authData && userData){
+        setAuthData(authData);
+        setUserData(userData);
       }else{
         return;
       }
@@ -55,6 +63,7 @@ export const AuthProvider = ({children}: UserContextProps) => {
         if(UserCredential){
           setAuthData({uid:UserCredential.user.uid, email: UserCredential.user.email});
           localStorage.setItem("@AuthData", JSON.stringify({uid:UserCredential.user.uid, email: UserCredential.user.email}));
+          getUser(UserCredential.user.uid);
         }
       })
         .catch((error) => {
@@ -70,6 +79,16 @@ export const AuthProvider = ({children}: UserContextProps) => {
         .catch((error) => console.log(error));
   };
 
+  async function getUser(uid: string) {
+    const UserCollection = collection(db, "users");
+    const q = query(UserCollection, where('uid', '==', uid));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      setUserData(doc.data());
+      localStorage.setItem("@UserData", JSON.stringify(doc.data()));
+    });
+  };
+
   async function register(email:string, senha:string, name:string, username:string){
     await createUserWithEmailAndPassword(auth, email, senha)
       .then((response) => {
@@ -83,7 +102,9 @@ export const AuthProvider = ({children}: UserContextProps) => {
 
   function logout() {
     setAuthData(undefined);
+    setUserData({});
     localStorage.removeItem("@AuthData");
+    localStorage.removeItem("@UserData");
     return;
   };
 
@@ -107,7 +128,7 @@ export const AuthProvider = ({children}: UserContextProps) => {
   }
 
   return (
-    <AuthContext.Provider value={{login, logout, register ,authData, isLoading, erro, nav, navChange}}>
+    <AuthContext.Provider value={{login, logout, register ,authData, isLoading, erro, nav, navChange, userData}}>
       {children}
     </AuthContext.Provider>
   );

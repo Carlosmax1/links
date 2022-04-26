@@ -14,7 +14,7 @@ interface FormProps {
   username: string;
 };
 interface VariantForm {
-  variant?: 'login' | 'register';
+  variant?: 'login' | 'register' | 'customizar';
 }
 
 export default function Form({ variant }: VariantForm) {
@@ -47,7 +47,7 @@ export default function Form({ variant }: VariantForm) {
 
   return (
     <>
-      {variant === 'login' ?
+      {variant === 'login' && (
         <form className='form-login' onSubmit={(e) => e.preventDefault()}>
           <TextField
             color='primary' className='inputs'
@@ -74,9 +74,11 @@ export default function Form({ variant }: VariantForm) {
             sx={buttonStyle}
           >
             Login</Button>
-          <Link to='/register' style={{ textDecoration: 'none' }}><Button variant='contained' className='btn-createA'sx={buttonStyle} color='primary'>Criar conta</Button></Link>
+          <Link to='/register' style={{ textDecoration: 'none' }}><Button variant='contained' className='btn-createA' sx={buttonStyle} color='primary'>Criar conta</Button></Link>
           <span className='forget__pass'>Esqueci minha senha</span>
-        </form> :
+        </form>
+      )}
+      {variant === 'register' && (
         <form className='form-register' onSubmit={(e) => e.preventDefault()} >
           <TextField sx={hoverInput} className='inputs' onChange={(event) => SetFormState({ ...formstate, name: event.currentTarget?.value })} required label='Nome' type='text'></TextField>
           <TextField sx={hoverInput} className='inputs' onChange={(event) => SetFormState({ ...formstate, email: event.currentTarget?.value })} required label='Email' type='email'></TextField>
@@ -91,7 +93,7 @@ export default function Form({ variant }: VariantForm) {
             onChange={(event) => SetFormState({ ...formstate, senha: event.currentTarget?.value })}
             required label='Senha' type='password'
             error={erroPass}
-            sx={hoverInput} 
+            sx={hoverInput}
           >
           </TextField>
           <TextField
@@ -100,12 +102,22 @@ export default function Form({ variant }: VariantForm) {
             required label='Confimar senha' type='password'
             error={erroPass}
             helperText={erroPass && ('Senhas diferentes')}
-            sx={hoverInput} 
+            sx={hoverInput}
           >
           </TextField>
           <Button onClick={() => auth.register(formstate.email, formstate.senha, formstate.name, formstate.username)} disabled={erroPass} variant='contained' sx={buttonStyle} className='btn-createA' type='submit'>Criar conta</Button>
         </form>
-      }
+      )}
+
+      {variant === 'customizar' && (
+        <form className='form-customize' onSubmit={(e) => e.preventDefault()}>
+          <TextField sx={hoverInput} className='inputs' label='nome' type='text' placeholder={auth.userData.name}></TextField>
+          <TextField disabled sx={hoverInput} className='inputs' label={auth.userData.username} type='text'></TextField>
+          <TextField multiline sx={hoverInput} maxRows={20} className='inputs' label='bios' placeholder='uma apresentação de você' type='text'></TextField>
+          <Button className='btn-customize-save' type='submit' variant='contained' sx={buttonStyle}>Savar mudanças</Button>
+        </form>
+      )}
+
     </>
   );
 };

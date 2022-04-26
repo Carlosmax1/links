@@ -1,9 +1,9 @@
-import React from 'react';
 import { useEffect, useState } from 'react';
 import { db } from '../config/firebase-config';
 import { collection, where, query, getDocs } from '@firebase/firestore';
 import { DocumentData } from 'firebase/firestore';
 import { useParams } from 'react-router-dom';
+import Footer from '../components/Footer/Footer';
 
 export default function Profile(){
 
@@ -28,6 +28,7 @@ export default function Profile(){
   return(
     <>
       <h1>Nome: {currentUser.name}</h1>
+      <Footer/>
     </>
   )
 };
