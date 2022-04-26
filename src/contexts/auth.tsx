@@ -24,6 +24,8 @@ export interface AuthContextData {
   authData?: AuthData;
   isLoading: boolean;
   erro: boolean;
+  nav: string;
+  navChange: (nav: string) => void;
 };
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
@@ -33,6 +35,7 @@ export const AuthProvider = ({children}: UserContextProps) => {
   const [authData, setAuthData] = useState<AuthData>();
   const [isLoading, setisLoading] = useState(false);
   const [erro, setErro] = useState(false);
+  const [nav, setNav] = useState('customizar');
 
   useEffect(() => {
     const loadStorage = () =>{
@@ -84,8 +87,27 @@ export const AuthProvider = ({children}: UserContextProps) => {
     return;
   };
 
+  function navChange(nav: string){
+    if(nav == 'customizar'){
+      setNav('customizar');
+      return;
+    }
+    if(nav == 'links'){
+      setNav('links');
+      return;
+    }
+    if(nav == 'social'){
+      setNav('social');
+      return;
+    }
+    if(nav == 'estatisticas'){
+      setNav('estatisticas');
+      return;
+    }
+  }
+
   return (
-    <AuthContext.Provider value={{login, logout, register ,authData, isLoading, erro}}>
+    <AuthContext.Provider value={{login, logout, register ,authData, isLoading, erro, nav, navChange}}>
       {children}
     </AuthContext.Provider>
   );

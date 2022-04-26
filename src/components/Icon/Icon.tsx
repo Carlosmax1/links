@@ -11,30 +11,35 @@ interface IconProps {
   'github' |
   'youtube' |
   'instagram' |
-  'linkedin' 
+  'linkedin';
+  width?: number | string;
+  height?: number | string;
+  padding?: number | string;
+  margin?: number | string;
 };
 
-export default function IconSocial({ name }: IconProps) {
+export default function IconSocial({ name, width, height, margin, padding }: IconProps) {
 
   return (
     <>
       {name === 'facebook' && (
-        <FacebookIcon />
+        <FacebookIcon 
+        style={{width: width, height: height, padding: padding, margin: margin}}/>
       )}
       {name === 'twitter' && (
-        <TwitterIcon  />
+        <TwitterIcon style={{width: width, height: height, padding: padding, margin: margin}}/>
       )}
       {name === 'github' && (
-        <GitHubIcon />
+        <GitHubIcon style={{width: width, height: height, padding: padding, margin: margin}} />
       )}
       {name === 'youtube' && (
-        <YouTubeIcon />
+        <YouTubeIcon style={{width: width, height: height, padding: padding, margin: margin}} />
       )}
       {name === 'instagram' && (
-        <InstagramIcon />
+        <InstagramIcon style={{width: width, height: height, padding: padding, margin: margin}} />
       )}
       {name === 'linkedin' && (
-        <LinkedInIcon />
+        <LinkedInIcon style={{width: width, height: height, padding: padding, margin: margin}} />
       )}
     </>
   )

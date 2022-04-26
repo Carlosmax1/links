@@ -1,0 +1,68 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
+.menu{
+  padding: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 63px;
+  border-bottom: 1px solid #38035c7e;
+}
+
+.user__infos{
+  display: flex;
+  align-items: center;
+}
+.user__info-name{
+  margin-left: 1em;
+}
+
+.user__name{
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 300;
+  color: #bdbdbd;
+  font-size: 20pt;
+}
+
+.user__name--username{
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 200;
+  font-style: italic;
+  font-size: 14pt;
+  color: #bdbdbd;
+}
+
+.socialmedia__icons{
+  color: #bdbdbd;
+}
+
+.menu__items{
+  display: flex;
+}
+
+.menu__items .items{
+  cursor: pointer;
+  text-transform: lowercase;
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 500;
+  color: #bdbdbd;
+  font-size: 19pt;
+  list-style: none;
+  margin: 1em;
+}
+
+.menu__items .items-active{
+  cursor: pointer;
+  text-transform: lowercase;
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 500;
+  color: #bdbdbd;
+  font-size: 19pt;
+  list-style: none;
+  margin: 1em;
+  border-bottom: solid 1px #38035c;
+  border-width: 5px;
+}

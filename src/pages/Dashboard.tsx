@@ -1,23 +1,23 @@
-import { Button, Container } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/auth';
 import { Link } from 'react-router-dom';
 import { db } from '../config/firebase-config';
 import { collection, where, query, getDocs } from '@firebase/firestore';
 import { DocumentData } from 'firebase/firestore';
-import UserInfo from '../components/UserInfo/UserInfo';
+import Menu from '../components/Menu/Menu';
+import Customize from '../components/Customize/Customize';
 
-interface DashBoardProps{
+interface DashBoardProps {
   name: string;
 }
 
-export default function DashBoard({name} : DashBoardProps) {
+export default function DashBoard({ name }: DashBoardProps) {
 
   const auth = useAuth();
   const [currentUser, setCurrentUser] = useState({} as DocumentData);
   const [file, setFile] = useState<FileList>();
-
-  document.title = `${name} - ${currentUser.name}`;
+  
+  document.title = `${name} - ${currentUser.name} | ${auth.nav}`;
 
   useEffect(() => {
     async function getUser() {
@@ -33,11 +33,18 @@ export default function DashBoard({name} : DashBoardProps) {
 
   return (
     <>
-      <Container fixed sx={{display: 'flex', justifyContent: 'center', marginTop: '1em', flexDirection: 'column', alignItems:"center"}}>
-        {currentUser.name &&(
-          <UserInfo name={currentUser.name} username={currentUser.username} social_medias={currentUser.social_medias}/>
-        )}
-      </Container>
+      {currentUser.name && (
+        <Menu 
+          name={currentUser.name} 
+          username={currentUser.username} 
+          social_medias={currentUser.social_medias}
+        />
+      )}
+      {auth.nav == 'customizar' &&(
+        <>
+          <Customize/>
+        </>
+      )}
     </>
   )
 }
