@@ -3,7 +3,7 @@ import Form from '../components/Form/Form';
 import Title from '../components/Title/Title';
 
 interface RegisterPageProps{
-  name: string
+  name: string;
 }
 
 export default function Register({name}: RegisterPageProps){
