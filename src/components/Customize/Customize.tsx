@@ -2,6 +2,7 @@ import './Customize.css';
 import PersonIcon from '@mui/icons-material/Person';
 import ImageIcon from '@mui/icons-material/Image';
 import Form from '../Form/Form';
+import Footer from '../Footer/Footer';
 
 export default function Customize() {
 
@@ -26,7 +27,7 @@ export default function Customize() {
             </div>
           </div>
         </div>
-        <Form variant='customizar' />
+        <Form variant='customizar' />    
       </div>
     </>
   )

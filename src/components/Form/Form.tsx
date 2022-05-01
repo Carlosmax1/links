@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/auth';
 import { hoverInput, buttonStyle } from '../../theme/theme';
 import './Form.css';
-import React from 'react';
 
 interface FormProps {
   email: string;
@@ -14,7 +13,7 @@ interface FormProps {
   username: string;
 };
 interface VariantForm {
-  variant?: 'login' | 'register' | 'customizar';
+  variant?: 'login' | 'register' | 'customizar' | 'social';
 }
 
 export default function Form({ variant }: VariantForm) {
@@ -115,6 +114,12 @@ export default function Form({ variant }: VariantForm) {
           <TextField disabled sx={hoverInput} className='inputs' label={auth.userData.username} type='text'></TextField>
           <TextField multiline sx={hoverInput} maxRows={20} className='inputs' label='bios' placeholder='uma apresentação de você' type='text'></TextField>
           <Button className='btn-customize-save' type='submit' variant='contained' sx={buttonStyle}>Savar mudanças</Button>
+        </form>
+      )}
+
+      {variant === 'social' && (
+        <form className='form-social'>
+
         </form>
       )}
 

@@ -58,7 +58,8 @@ export const hoverInput = {
   },
   '& .MuiInputLabel-root.Mui-disabled':{
     color: '#717173'
-  }
+  },
+  margin: 2
 };
 
 export const buttonStyle = {
