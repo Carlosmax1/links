@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { useState, useContext, createContext, useEffect } from 'react';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword} from 'firebase/auth';
 import { auth } from '../config/firebase-config';
@@ -8,7 +8,7 @@ import {db} from '../config/firebase-config';
 
 type UserContextProps = {
   children: ReactNode
-}
+};
 
 export interface AuthData {
   uid: string;
@@ -58,17 +58,21 @@ export const AuthProvider = ({children}: UserContextProps) => {
   },[])
 
   async function login(email:string, senha:string){
+    setIsLoading(true);
+    setErro(false);
     await signInWithEmailAndPassword(auth, email, senha)
       .then((UserCredential) => {
         if(UserCredential){
           setAuthData({uid:UserCredential.user.uid, email: UserCredential.user.email});
           localStorage.setItem("@AuthData", JSON.stringify({uid:UserCredential.user.uid, email: UserCredential.user.email}));
           getUser(UserCredential.user.uid);
+          setIsLoading(false);
         }
       })
         .catch((error) => {
           if(error){
             setErro(true);
+            setIsLoading(false);
           }
         });
   };

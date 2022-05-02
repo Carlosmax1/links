@@ -1,4 +1,3 @@
-import React from 'react';
 import Form from '../components/Form/Form';
 import Title from '../components/Title/Title';
 import { useEffect } from 'react';

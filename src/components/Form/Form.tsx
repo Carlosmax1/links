@@ -2,8 +2,12 @@ import { Button, TextField } from '@mui/material';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/auth';
+import Alert from '@mui/material/Alert';
+import Snackbar, { SnackbarOrigin } from '@mui/material/Snackbar';
+import AlertTitle from '@mui/material/AlertTitle';
 import { hoverInput, buttonStyle } from '../../theme/theme';
 import './Form.css';
+import CircularProgress from '@mui/material/CircularProgress';
 
 interface FormProps {
   email: string;
@@ -65,6 +69,7 @@ export default function Form({ variant }: VariantForm) {
             sx={hoverInput}
           >
           </TextField>
+          {auth.isLoading &&(<CircularProgress sx={{marginBottom: 1, marginTop: -2}} color='primary'/>)}
           <Button
             className='btn-login'
             onClick={() => auth.login(formstate.email, formstate.senha)} variant='outlined'
@@ -75,6 +80,14 @@ export default function Form({ variant }: VariantForm) {
             Login</Button>
           <Link to='/register' style={{ textDecoration: 'none' }}><Button variant='contained' className='btn-createA' sx={buttonStyle} color='primary'>Criar conta</Button></Link>
           <span className='forget__pass'>Esqueci minha senha</span>
+          {auth.erro &&(
+            <>
+              <Alert severity='error'>
+                <AlertTitle>Erro Usuário ou senha.</AlertTitle>
+                Usuário e/ou senha inválidos.
+              </Alert>
+            </>
+          )}
         </form>
       )}
       {variant === 'register' && (
