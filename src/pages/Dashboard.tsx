@@ -13,7 +13,6 @@ interface DashBoardProps {
 export default function DashBoard({ name }: DashBoardProps) {
 
   const auth = useAuth();
-  const [file, setFile] = useState<FileList>();
 
   document.title = `${name} - ${auth.userData.name} | ${auth.nav}`;
 

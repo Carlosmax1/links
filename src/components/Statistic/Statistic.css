@@ -3,7 +3,30 @@
   margin: 0 auto;
   margin-top: 2em;
   width: 500px;
-  height: 100px;
+  height: 250px;
   border-radius: 20px;
   border: 1px solid #bdbdbd5e;
+}
+
+.sta__visu{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: 3em 0;
+}
+
+.visu__text{
+  margin: 0.5em;
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 400;
+  color: #bdbdbd;
+  font-size: 20pt;
+}
+
+.visu__num{
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 400;
+  color: #bdbdbd;
+  font-size: 20pt;
 }

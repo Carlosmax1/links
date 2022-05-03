@@ -1,15 +1,36 @@
 import './Social.css';
 import InstagramIcon from '@mui/icons-material/Instagram';
-import 
-{ 
-  GitHub, 
-  Facebook, 
-  LinkedIn, 
+import {
+  GitHub,
+  Facebook,
+  LinkedIn,
   Twitter,
   WhatsApp,
+  YouTube,
+  Reddit,
 } from '@mui/icons-material';
 import { TextField } from '@mui/material';
-import { hoverInput } from '../../theme/theme';
+
+const hoverInputSocial = {
+  '& .MuiOutlinedInput-root': {
+    fontSize: 19,
+    ':hover': {
+      '& .MuiOutlinedInput-notchedOutline': {
+        borderColor: "#55048B",
+      }
+    }
+  },
+  '& .MuiInputLabel-root': {
+    fontSize: 18,
+  },
+  '& .MuiOutlinedInput-root.Mui-disabled .MuiOutlinedInput-notchedOutline': {
+    borderColor: "#717173",
+  },
+  '& .MuiInputLabel-root.Mui-disabled': {
+    color: '#717173'
+  },
+  margin: 2
+}
 
 export default function Social() {
   return (
@@ -19,7 +40,7 @@ export default function Social() {
           <TextField
             label='instagram'
             className='input__social'
-            sx={hoverInput}
+            sx={hoverInputSocial}
             InputProps={{
               startAdornment: (
                 <InstagramIcon sx={{ color: '#8d1373' }} />
@@ -28,7 +49,7 @@ export default function Social() {
           />
           <TextField
             label='github'
-            sx={hoverInput}
+            sx={hoverInputSocial}
             className='input__social'
             InputProps={{
               startAdornment: (
@@ -38,7 +59,7 @@ export default function Social() {
           />
           <TextField
             label='facebook'
-            sx={hoverInput}
+            sx={hoverInputSocial}
             className='input__social'
             InputProps={{
               startAdornment: (
@@ -48,17 +69,17 @@ export default function Social() {
           />
           <TextField
             label='linkedin'
-            sx={hoverInput}
+            sx={hoverInputSocial}
             className='input__social'
             InputProps={{
               startAdornment: (
-                <LinkedIn sx={{ color: "#3b5999" }} />
+                <LinkedIn sx={{ color: "#0A66C2" }} />
               )
             }}
           />
           <TextField
             label='twitter'
-            sx={hoverInput}
+            sx={hoverInputSocial}
             className='input__social'
             InputProps={{
               startAdornment: (
@@ -68,7 +89,7 @@ export default function Social() {
           />
           <TextField
             label='whatsapp'
-            sx={hoverInput}
+            sx={hoverInputSocial}
             className='input__social'
             type='tel'
             InputProps={{
@@ -76,6 +97,41 @@ export default function Social() {
                 <WhatsApp sx={{ color: '#4ECB5C' }} />
               )
             }}
+          />
+          <TextField
+            label='youtube'
+            sx={hoverInputSocial}
+            className='input__social'
+            InputProps={{
+              startAdornment: (
+                <YouTube sx={{ color: '#EF4444' }} />
+              )
+            }}
+          />
+          <TextField
+            label='reddit'
+            sx={hoverInputSocial}
+            className='input__social'
+            InputProps={{
+              startAdornment: (
+                <Reddit sx={{ color: '#FF4500' }} />
+              )
+            }}
+          />
+          <TextField
+            label='discord'
+            sx={hoverInputSocial}
+            className='input__social'
+          />
+          <TextField
+            label='tiktok'
+            sx={hoverInputSocial}
+            className='input__social'
+          />
+          <TextField
+            label='spotify'
+            sx={hoverInputSocial}
+            className='input__social'
           />
         </div>
       </div>

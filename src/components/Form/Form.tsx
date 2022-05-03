@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/auth';
 import Alert from '@mui/material/Alert';
-import Snackbar, { SnackbarOrigin } from '@mui/material/Snackbar';
 import AlertTitle from '@mui/material/AlertTitle';
 import { hoverInput, buttonStyle } from '../../theme/theme';
 import './Form.css';
